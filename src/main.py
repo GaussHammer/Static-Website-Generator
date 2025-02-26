@@ -3,12 +3,17 @@ from htmlnode import *
 from shutil import rmtree, copy
 from os import path, mkdir, listdir
 from generate_page import *
+import sys
 
 def main():
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
+    else:
+        basepath = "/"
     copy_static()
-    generate_page_recursive("content", "template.html", "public")
+    generate_pages_recursive("content", "template.html", "docs", basepath)
 
-def copy_static(source = "static", destination = "public"):
+def copy_static(source = "static", destination = "docs"):
     if source == "static":
         if path.exists(destination):
             rmtree(destination)
